@@ -14,10 +14,11 @@
 
 char	*get_next_line(int fd)
 {
+	static char str[BUFFER];
 	char	*dst;
 	int		size;
 
-	size = r_size(fd);
+	size = r_size(fd,str);
 	printf("%d\n",size);
 	dst = (char *) malloc(sizeof(char) * 5);
 	if (dst == NULL)
@@ -33,12 +34,11 @@ char	*get_next_line(int fd)
 int main(void)
 {
 	char	*str;
-	int		fd, nb_read;
+	int		fd;
 	int		i;
 
 	i = 0;
 	str = NULL;
-	nb_read = 1;
 	fd = open("test.txt", O_RDONLY);
 	while (i < 3)
 	{

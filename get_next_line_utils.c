@@ -80,33 +80,26 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-int	r_size(int fd)
+int	r_size(int fd, char *buffer)
 {
 	int			i;
 	int			tot_read;
 	int			nb_read;
-	static char	str[BUFFER];
 	char		*dst_end;
-	char		*str_start;
 
 	tot_read = 0;
 	nb_read = BUFFER;
 	dst_end = NULL;
-	str_start = str;
 	while ((nb_read == BUFFER) && !(dst_end))
 	{
-		nb_read = read(fd, str, BUFFER);
+		nb_read = read(fd, buffer, BUFFER);
 		if (nb_read == -1)
 			return (0);
 		i = nb_read;
-		str[i] = '\0';	
-		dst_end = ft_strchr(str, '\n');
+		buffer[i] = '\0';
+		dst_end = ft_strchr(buffer, '\n');
 		if (dst_end)
-		{	
-				tot_read = (ft_strlen(str) - ft_strlen(dst_end)) + tot_read;
-				str_start = ft_memmove(str_start,str, BUFFER);
-				printf("%s\n",str_start);
-		}
+			tot_read = (ft_strlen(buffer) - ft_strlen(dst_end)) + tot_read;
 		else
 			tot_read = nb_read + tot_read;
 	}
