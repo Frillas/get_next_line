@@ -16,10 +16,16 @@ char	*get_next_line(int fd)
 {
 	static char str[BUFFER];
 	char	*dst;
-	int		size;
+	int		i;
 
-	size = r_size(fd,str);
-	printf("%d\n",size);
+	i = 0;
+	dst = NULL;
+	while(i < 10)
+	{
+		read_line(fd,str);
+		printf("|%s|",str);
+		i++;
+	}
 	dst = (char *) malloc(sizeof(char) * 5);
 	if (dst == NULL)
 		return (NULL);

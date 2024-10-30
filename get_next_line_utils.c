@@ -77,31 +77,16 @@ char	*ft_strchr(const char *s, int c)
 			return (&str[i]);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
-int	r_size(int fd, char *buffer)
+char	*read_line(int fd, char *buffer)
 {
-	int			i;
-	int			tot_read;
 	int			nb_read;
-	char		*dst_end;
-
-	tot_read = 0;
-	nb_read = BUFFER;
-	dst_end = NULL;
-	while ((nb_read == BUFFER) && !(dst_end))
-	{
-		nb_read = read(fd, buffer, BUFFER);
-		if (nb_read == -1)
-			return (0);
-		i = nb_read;
-		buffer[i] = '\0';
-		dst_end = ft_strchr(buffer, '\n');
-		if (dst_end)
-			tot_read = (ft_strlen(buffer) - ft_strlen(dst_end)) + tot_read;
-		else
-			tot_read = nb_read + tot_read;
-	}
-	return (tot_read);
+	
+	nb_read = read(fd, buffer, BUFFER);
+	if (nb_read <= 0)
+		return (NULL);
+	buffer[nb_read] = '\0';
+	return (buffer);
 }
