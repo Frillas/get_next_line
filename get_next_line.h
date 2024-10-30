@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 07:02:31 by aroullea          #+#    #+#             */
-/*   Updated: 2024/10/29 11:44:17 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:48:37 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <stdio.h>
-#define	BUFFER 5
+#define	BUFFER_SIZE 30
 
 char	*get_next_line(int fd);
 char	*read_line(int fd, char *buffer);

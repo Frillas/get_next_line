@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:31:00 by aroullea          #+#    #+#             */
-/*   Updated: 2024/10/29 11:32:31 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:29:34 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,32 @@
 
 char	*get_next_line(int fd)
 {
-	static char str[BUFFER];
-	char	*dst;
-	int		i;
+	char	*buf;
+	char	*pos;
 
-	i = 0;
-	dst = NULL;
-	while(i < 10)
-	{
-		read_line(fd,str);
-		printf("|%s|",str);
-		i++;
-	}
-	dst = (char *) malloc(sizeof(char) * 5);
-	if (dst == NULL)
+	pos = NULL;
+	buf = (char *) malloc(sizeof(char) * BUFFER_SIZE);
+	if (buf == NULL)
 		return (NULL);
-	dst[0] = 'T';
-	dst[1] = 'E';
-	dst[2] = 'S';
-	dst[3] = 'T';
-	dst[4] = '\0';
-	return (dst);
+	while (1)
+	{
+		buf = read_line(fd, buf);
+		pos = ft_strchr(buf,'\n');
+	}
+	return (buf);
 }
 
 int main(void)
 {
 	char	*str;
 	int		fd;
-	int		i;
 
-	i = 0;
 	str = NULL;
 	fd = open("test.txt", O_RDONLY);
-	while (i < 3)
+	do
 	{
-			str = get_next_line(fd);
-			printf("%s\n",str);
-			i++;
-	}
-	free(str);
+		str = get_next_line(fd);
+		free(str);
+	} while(str != NULL);
 	close(fd);
 }

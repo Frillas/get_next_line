@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 06:59:53 by aroullea          #+#    #+#             */
-/*   Updated: 2024/10/29 12:02:36 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:43:59 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,34 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*read_line(int fd, char *buffer)
+int		*read_line(int fd, char *buffer)
 {
 	int			nb_read;
-	
-	nb_read = read(fd, buffer, BUFFER);
-	if (nb_read <= 0)
-		return (NULL);
-	buffer[nb_read] = '\0';
+	int			tot;
+	static int	size;
+	char		*pos;
+
+	tot = 0;
+	while (tot < size)
+	{
+		nb_read = read(fd, buffer, BUFFER_SIZE);
+		tot = tot + nb_read;
+	}
+	while (!pos)
+	{
+		nb_read = read(fd, buffer, BUFFER_SIZE);
+		if (nb_read <= 0)
+			return (NULL);
+		buffer[nb_read] = '\0';
+		size = size + nb_read;
+		pos = ft_strchr(buffer, '\n');
+		if (pos)
+		{
+			pos[1] = '\0';
+			size = size - ft_strlen(pos);
+		}
+	}
+	while (nb_read != 0)
+		nb_read(fd, buffer, BUFFER_SIZE);
 	return (buffer);
 }
