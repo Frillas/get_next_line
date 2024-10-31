@@ -77,9 +77,7 @@ int main(void)
 {
 	char	*str;
 	int		fd;
-	int		i;
 
-	i = 0;
 	str = NULL;
 	fd = open("test.txt", O_RDONLY);
 	str = get_next_line(fd);

@@ -83,10 +83,9 @@ char	*ft_strchr(const char *s, int c)
 char	*read_line(int fd, char *buffer, int *find)
 {
 	int			nb_read;
-	int			tot;
 	char		*pos;
-
-	tot = 0;
+	char		*test;
+	
 	pos = NULL;
 	nb_read = read(fd, buffer, BUFFER_SIZE);
 	if (nb_read <= 0)
@@ -95,8 +94,11 @@ char	*read_line(int fd, char *buffer, int *find)
 	pos = ft_strchr(buffer, '\n');
 	if (pos)
 	{
+		test = (char *) malloc(sizeof(char) * ft_strlen(pos));
+		ft_memmove(test, pos, BUFFER_SIZE);
 		pos[1] = '\0';
 		*find = 1;
+		printf("test = |%s|",test);
 	}	
 	return (buffer);
 }
