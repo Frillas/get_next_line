@@ -12,26 +12,7 @@
 
 #include "get_next_line.h"
 
-char    *ft_strdup(const char *s)
-{
-    char        *dst;
-    size_t      i;
-    size_t      size;
-
-    i = 0;
-    size = ft_strlen(s);
-    dst = (char *) malloc(size + 1);
-    if (dst == NULL)
-        return (NULL);
-    while (i <= size)
-    {
-        dst[i] = s[i];
-        i++;
-    }
-    return (dst);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
+/*char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -58,32 +39,79 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	str[i + j] = '\0';
 	return (str);
+}*/
+
+char    *ft_strdup(const char *s)
+{
+    char        *dst;
+    size_t      i;
+    size_t      size;
+
+    i = 0;
+    size = ft_strlen(s);
+    dst = (char *) malloc(size + 1);
+    if (dst == NULL)
+        return (NULL);
+    while (i <= size)
+    {
+        dst[i] = s[i];
+        i++;
+    }
+    return (dst);
+}
+
+char    *ft_strcpy(char *dest, char *src)
+{
+    int i;
+
+    i = 0;
+    while (src[i] != '\0')
+    {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\0';
+    return (dest);
+}
+
+void double_size(char *buf1, int i)
+{
+	char *tmp;
+
+	tmp = NULL;
+	tmp = (char *) malloc (sizeof(char *) * (BUFFER_SIZE * i));
+	free(buf1);
+	buf1 = tmp;
 }
 
 char	*get_next_line(int fd)
 {
 	char	*buf1;
-	char	*res;
+	char	*buf2;
+	char	*start_buf1;
 	int		find;
 	int		i;
 
-	res = NULL;
 	find = 0;
-	i = 1;
+	i = 2;
 	buf1 = (char *) malloc(sizeof(char) * BUFFER_SIZE);
 	if (buf1 == NULL)
 		return (NULL);
+	start_buf1 = buf1;
 	while (find == 0)
 	{
 		buf1 = read_line(fd, buf1, &find);
 		if (!find)
 		{
-			buf2 = ft_strdup(buf1);
-			buf1 = (char *) malloc(sizeof(char) * BUFFER_SIZE * i);
+			buf2 = ft_strdup(start_buf1);
+			double_size(start_buf1, i);
+			ft_strcpy(start_buf1,buf2);
+			buf1 = ft_strchr(buf1, '\0');
+			free(buf2);
 			i++;
 		}
 	}
-	return (buf1);
+	return (start_buf1);
 }
 
 int main(void)
@@ -95,6 +123,5 @@ int main(void)
 	fd = open("test.txt", O_RDONLY);
 	str = get_next_line(fd);
 	printf("%s",str);
-	free(str);
 	close(fd);
 }

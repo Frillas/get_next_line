@@ -24,5 +24,8 @@ char	*read_line(int fd, char *buffer, int *find);
 size_t  ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 void	*ft_memmove(void *dest, const void *src, size_t n);
+void	double_size(char *buf1, int i);
+char    *ft_strcpy(char *dest, char *src);
+char    *ft_strdup(const char *s);
 
 #endif
