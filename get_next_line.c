@@ -6,11 +6,30 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:31:00 by aroullea          #+#    #+#             */
-/*   Updated: 2024/10/31 11:38:59 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:25:40 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char    *ft_strdup(const char *s)
+{
+    char        *dst;
+    size_t      i;
+    size_t      size;
+
+    i = 0;
+    size = ft_strlen(s);
+    dst = (char *) malloc(size + 1);
+    if (dst == NULL)
+        return (NULL);
+    while (i <= size)
+    {
+        dst[i] = s[i];
+        i++;
+    }
+    return (dst);
+}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -21,7 +40,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	if (!s1 || !s2)
+	if (!s2)
 		return (NULL);
 	len_str = ft_strlen(s1) + ft_strlen(s2);
 	str = malloc(sizeof(char) * (len_str + 1));
@@ -43,34 +62,28 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 char	*get_next_line(int fd)
 {
-	char	*buf;
+	char	*buf1;
 	char	*res;
 	int		find;
-	int		copy;
+	int		i;
 
+	res = NULL;
 	find = 0;
-	copy = 0;
-	buf = (char *) malloc(sizeof(char) * BUFFER_SIZE);
-	if (buf == NULL)
-		return (NULL);
-	res = malloc(1);
-	if (res == NULL)
+	i = 1;
+	buf1 = (char *) malloc(sizeof(char) * BUFFER_SIZE);
+	if (buf1 == NULL)
 		return (NULL);
 	while (find == 0)
 	{
-		buf = read_line(fd, buf, &find);
-		if (ft_strlen(buf) == BUFFER_SIZE)
+		buf1 = read_line(fd, buf1, &find);
+		if (!find)
 		{
-			res = ft_strjoin(res, buf);
-			copy = 1;
+			buf2 = ft_strdup(buf1);
+			buf1 = (char *) malloc(sizeof(char) * BUFFER_SIZE * i);
+			i++;
 		}
 	}
-	if (copy == 1)
-	{
-		res = ft_strjoin(res, buf);
-		return (res);
-	}
-	return (buf);
+	return (buf1);
 }
 
 int main(void)

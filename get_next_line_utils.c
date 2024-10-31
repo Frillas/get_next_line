@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 06:59:53 by aroullea          #+#    #+#             */
-/*   Updated: 2024/10/31 11:23:13 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:08:27 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,8 @@ char	*ft_strchr(const char *s, int c)
 
 char	*read_line(int fd, char *buffer, int *find)
 {
-	int			nb_read;
-	char		*pos;
-	char		*test;
+	int		nb_read;
+	char	*pos;
 	
 	pos = NULL;
 	nb_read = read(fd, buffer, BUFFER_SIZE);
@@ -94,11 +93,8 @@ char	*read_line(int fd, char *buffer, int *find)
 	pos = ft_strchr(buffer, '\n');
 	if (pos)
 	{
-		test = (char *) malloc(sizeof(char) * ft_strlen(pos));
-		ft_memmove(test, pos, BUFFER_SIZE);
 		pos[1] = '\0';
 		*find = 1;
-		printf("test = |%s|",test);
 	}	
 	return (buffer);
 }
