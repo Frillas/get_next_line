@@ -82,18 +82,18 @@ char	*ft_strchr(const char *s, int c)
 
 char	*read_line(int fd, char *buffer, int *find)
 {
-	int			nb_read;
-	char		*pos;
-	
-	pos = NULL;
+	int		nb_read;
+	char	*end;
+
+	end = NULL;
 	nb_read = read(fd, buffer, BUFFER_SIZE);
 	if (nb_read <= 0)
 		return (NULL);
 	buffer[nb_read] = '\0';
-	pos = ft_strchr(buffer, '\n');
-	if (pos)
+	end = ft_strchr(buffer, '\n');
+	if (end)
 	{
-		pos[1] = '\0';
+		end[1] = '\0';
 		*find = 1;
 	}	
 	return (buffer);

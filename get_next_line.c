@@ -12,50 +12,49 @@
 
 #include "get_next_line.h"
 
-char	*double_size(char *buf1, int i)
+char	*double_size(char *s_buf, int i)
 {
-	char		*tmp;
+	char		*new;
 	size_t		j;
 
 	j = 0;
-	tmp = NULL;
-	tmp = (char *) malloc ((sizeof(char) * (BUFFER_SIZE * i)) + 1);
-	if (tmp == NULL)
+	new = NULL;
+	new = (char *) malloc ((sizeof(char) * (BUFFER_SIZE * i)) + 1);
+	if (new == NULL)
 		return (NULL);
-	while (j <= ft_strlen(buf1))
+	while (j <= ft_strlen(s_buf))
 	{
-		tmp[j] = buf1[j];
+		new[j] = s_buf[j];
 		j++;
 	}
-	free(buf1);
-	return (tmp);
+	free(s_buf);
+	return (new);
 }
 
 char	*get_next_line(int fd)
 {
-	char	*buf1;
-	char	*start_buf1;
+	char	*buf;
+	char	*start_buf;
 	int		find;
 	int		i;
 
 	find = 0;
 	i = 2;
-	buf1 = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (buf1 == NULL)
+	buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (buf == NULL)
 		return (NULL);
-	start_buf1 = buf1;
+	start_buf = buf;
 	while (find == 0)
 	{
-		buf1 = read_line(fd, buf1, &find);
+		buf = read_line(fd, buf, &find);
 		if (!find)
 		{
-			start_buf1 = double_size(start_buf1, i);
-			buf1 = start_buf1;
-			buf1 = ft_strchr(buf1, '\0');
+			start_buf = double_size(start_buf, i);
+			buf = ft_strchr(start_buf, '\0');
 			i++;
 		}
 	}
-	return (start_buf1);
+	return (start_buf);
 }
 
 int main(void)
