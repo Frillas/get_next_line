@@ -20,11 +20,11 @@
 #define	BUFFER_SIZE 5
 
 char	*get_next_line(int fd);
-char	*read_line(int fd, char *buffer, int *find);
+char	*read_line(int fd, char *buffer, int *find, char *remaining);
 size_t  ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 void	*ft_memmove(void *dest, const void *src, size_t n);
-char	*double_size(char *s_buf, int i);
+char	*double_size(char *s_buf, int i, size_t size);
 char    *ft_strcpy(char *dest, char *src);
 char    *ft_strdup(const char *s);
 
