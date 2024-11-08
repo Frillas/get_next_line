@@ -6,16 +6,16 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:23:55 by aroullea          #+#    #+#             */
-/*   Updated: 2024/11/08 15:49:21 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:46:32 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_check_line(char *remain)
+char	*ft_add_line(char *remain)
 {
 	char	*new_line;
-	char	*remaining;
+	char	*new_rem;
 	size_t	size;
 	size_t	i;
 
@@ -26,16 +26,16 @@ char	*ft_check_line(char *remain)
 	new_line = ft_strchr(remain, '\n');
 	if (new_line)
 		size = ft_strlen(remain) - ft_strlen(new_line + 1);
-	remaining = (char *) malloc(sizeof(char) * (size + 2));
-	if (remaining == NULL)
+	new_rem = (char *) malloc(sizeof(char) * (size + 2));
+	if (new_rem == NULL)
 		return (NULL);
 	while (i < size)
 	{
-		remaining[i] = remain[i];
+		new_rem[i] = remain[i];
 		i++;
 	}
-	remaining[i] = '\0';
-	return (remaining);
+	new_rem[i] = '\0';
+	return (new_rem);
 }
 
 char	*ft_add_remain(char *remain)
@@ -113,7 +113,7 @@ char	*get_next_line(int fd)
 	remain = ft_read_line(fd, remain);
 	if ((remain == NULL) || (ft_strlen(remain) == 0))
 		return (NULL);
-	line = ft_check_line(remain);
+	line = ft_add_line(remain);
 	remain = ft_add_remain(remain);
 	return (line);
 }

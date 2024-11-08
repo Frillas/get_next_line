@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:41:11 by aroullea          #+#    #+#             */
-/*   Updated: 2024/11/08 15:42:17 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:46:43 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 char	*get_next_line(int fd);
 char	*ft_read_line(int fd, char *read_list);
-char	*ft_check_line(char *line);
+char	*ft_add_line(char *line);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char const *s2);
 void	*ft_memmove(void *dest, const void *src, size_t n);
