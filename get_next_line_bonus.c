@@ -105,16 +105,16 @@ char	*ft_add_buf(int fd, char *remaining)
 char	*get_next_line(int fd)
 {
 	char			*line;
-	static char		*remain;
+	static char		*remain[1024];
 
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 		return (NULL);
-	remain = ft_add_buf(fd, remain);
-	if ((remain == NULL) || (remain[0] == '\0'))
+	remain[fd] = ft_add_buf(fd, remain[fd]);
+	if ((remain[fd] == NULL) || (remain[fd][0] == '\0'))
 		return (NULL);
-	line = ft_add_line(remain);
-	remain = ft_add_remain(remain);
+	line = ft_add_line(remain[fd]);
+	remain[fd] = ft_add_remain(remain[fd]);
 	return (line);
 }
 
