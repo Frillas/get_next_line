@@ -36,7 +36,7 @@ char	*ft_add_line(char *rem)
 	return (new);
 }
 
-char	*ft_add_remain(char *remain, char *line)
+char	*ft_add_remain(char *remain)
 {
 	char	*new_rem;
 	char	*end;
@@ -51,7 +51,6 @@ char	*ft_add_remain(char *remain, char *line)
 		if (new_rem == NULL)
 		{
 			free(remain);
-			free(line);
 			return (NULL);
 		}
 		ft_copy(size, new_rem, end);
@@ -126,6 +125,6 @@ char	*get_next_line(int fd)
 		remain[fd] = NULL;
 		return (NULL);
 	}
-	remain[fd] = ft_add_remain(remain[fd], line);
+	remain[fd] = ft_add_remain(remain[fd]);
 	return (line);
 }

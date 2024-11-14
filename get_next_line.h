@@ -28,7 +28,7 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char const *s2, size_t k, size_t l);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 size_t	ft_strlen(const char *s);
-char	*ft_add_remain(char *remain, char *line);
+char	*ft_add_remain(char *remain);
 char	*ft_copy(size_t size, char *new_rem, char *end);
 
 #endif
