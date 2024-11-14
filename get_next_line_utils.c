@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:23:49 by aroullea          #+#    #+#             */
-/*   Updated: 2024/11/08 16:47:31 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:53:21 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,41 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	char	*str;
-	char	letter;
-	size_t	i;
-
-	i = 0;
-	letter = c;
-	str = (char *)s;
-	while (i < ft_strlen(str) + 1)
+	while (*s)
 	{
-		if (str[i] == letter)
-			return (&str[i]);
-		i++;
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
 	return (NULL);
 }
 
-char	*ft_strjoin(char *s1, char const *s2, size_t l)
+char	*ft_strjoin(char *s1, char const *s2, size_t k, size_t l)
 {
 	size_t	i;
-	size_t	j;
 	char	*str;
-	size_t	k;
 
 	i = 0;
-	j = 0;
-	k = ft_strlen(s1);
 	str = malloc(sizeof(char) * (k + l + 1));
 	if (str == NULL)
+	{
+		free(s1);
 		return (NULL);
+	}
 	while (i < k)
 	{
 		str[i] = s1[i];
 		i++;
 	}
-	while (j < l)
+	if (k > 0)
+		free(s1);
+	i = 0;
+	while (i < l)
 	{
-		str[i + j] = s2[j];
-		j++;
+		str[k + i] = s2[i];
+		i++;
 	}
-	str[i + j] = '\0';
-	free (s1);
+	str[k + l] = '\0';
 	return (str);
 }
 
@@ -63,7 +57,7 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	if (s == NULL )
+	if (s == NULL)
 		return (0);
 	while (s[i] != '\0')
 		i++;
@@ -75,7 +69,7 @@ char	*ft_copy(size_t size, char *new_rem, char *end)
 	size_t	i;
 
 	i = 1;
-	while (i <= size)
+	while ((i <= size) && (end[i] != '\0'))
 	{
 		new_rem[i - 1] = end[i];
 		i++;
