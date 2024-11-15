@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:23:55 by aroullea          #+#    #+#             */
-/*   Updated: 2024/11/15 15:10:56 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:20:06 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_add_remain(char *remain)
 	return (new_rem);
 }
 
-char	*ft_big_line(int fd, char *buffer, char *rem)
+char	*ft_big_buf(int fd, char *buffer, char *rem)
 {
 	char	*end;
 	int		nb_read;
@@ -90,12 +90,12 @@ char	*ft_big_line(int fd, char *buffer, char *rem)
 	return (rem);
 }
 
-char	*ft_size_buf(int fd, char *remaining)
+char	*check_buf_size(int fd, char *remaining)
 {
 	char	*buffer;
 
 	if (BUFFER_SIZE < 1024)
-		remaining = ft_small_line(fd, remaining, 1);
+		remaining = ft_small_buf(fd, remaining, 1);
 	else
 	{
 		buffer = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -105,7 +105,7 @@ char	*ft_size_buf(int fd, char *remaining)
 				free(remaining);
 			return (NULL);
 		}
-		remaining = ft_big_line(fd, buffer, remaining);
+		remaining = ft_big_buf(fd, buffer, remaining);
 	}
 	return (remaining);
 }
@@ -118,7 +118,7 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 		return (NULL);
-	remain[fd] = ft_size_buf(fd, remain[fd]);
+	remain[fd] = check_buf_size(fd, remain[fd]);
 	if (remain[fd] == NULL)
 		return (NULL);
 	line = ft_add_line(remain[fd]);

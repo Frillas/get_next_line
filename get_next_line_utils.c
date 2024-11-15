@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:23:49 by aroullea          #+#    #+#             */
-/*   Updated: 2024/11/15 15:12:28 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:18:05 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*ft_copy(size_t size, char *new_rem, char *end)
 	return (new_rem);
 }
 
-char	*ft_small_line(int fd, char *rem, int nb)
+char	*ft_small_buf(int fd, char *rem, int nb)
 {
 	char	*end;
 	int		tot;
