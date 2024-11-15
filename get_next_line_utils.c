@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:23:49 by aroullea          #+#    #+#             */
-/*   Updated: 2024/11/13 18:53:21 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:12:28 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ char	*ft_strjoin(char *s1, char const *s2, size_t k, size_t l)
 	}
 	if (k > 0)
 		free(s1);
-	i = 0;
-	while (i < l)
+	while (i < k + l)
 	{
-		str[k + i] = s2[i];
+		str[i] = s2[i - k];
 		i++;
 	}
 	str[k + l] = '\0';
@@ -76,4 +75,33 @@ char	*ft_copy(size_t size, char *new_rem, char *end)
 	}
 	new_rem[i - 1] = '\0';
 	return (new_rem);
+}
+
+char	*ft_small_line(int fd, char *rem, int nb)
+{
+	char	*end;
+	int		tot;
+	char	buffer[1024 + 1];
+
+	end = NULL;
+	tot = 0;
+	while ((end == NULL) && (nb > 0))
+	{
+		nb = read(fd, buffer + tot, BUFFER_SIZE);
+		if (nb == -1)
+		{
+			free(rem);
+			return (NULL);
+		}
+		tot += nb;
+		buffer[tot] = '\0';
+		end = ft_strchr(buffer, '\n');
+		if ((tot + BUFFER_SIZE > 1024) || ((nb == 0) && (buffer[0])) || (end))
+		{
+			rem = ft_strjoin(rem, buffer, ft_strlen(rem), ft_strlen(buffer));
+			tot = 0;
+			buffer[0] = '\0';
+		}
+	}
+	return (rem);
 }

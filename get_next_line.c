@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:23:55 by aroullea          #+#    #+#             */
-/*   Updated: 2024/11/13 18:55:15 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:14:40 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ char	*ft_add_line(char *rem)
 
 	size = 0;
 	i = 0;
-	if (!rem || !*rem)
-		return (NULL);
 	while (rem[size] && rem[size] != '\n')
 		size++;
 	new = (char *) malloc(sizeof(char) * (size + 1 + (rem[size] == '\n')));
@@ -64,7 +62,7 @@ char	*ft_add_remain(char *remain)
 	return (new_rem);
 }
 
-char	*ft_read_line(int fd, char *buffer, char *rem)
+char	*ft_big_line(int fd, char *buffer, char *rem)
 {
 	char	*end;
 	int		nb_read;
@@ -92,18 +90,23 @@ char	*ft_read_line(int fd, char *buffer, char *rem)
 	return (rem);
 }
 
-char	*ft_add_buf(int fd, char *remaining)
+char	*ft_size_buf(int fd, char *remaining)
 {
 	char	*buffer;
 
-	buffer = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (buffer == NULL)
+	if (BUFFER_SIZE < 1024)
+		remaining = ft_small_line(fd, remaining, 1);
+	else
 	{
-		if (remaining)
-			free(remaining);
-		return (NULL);
+		buffer = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (buffer == NULL)
+		{
+			if (remaining)
+				free(remaining);
+			return (NULL);
+		}
+		remaining = ft_big_line(fd, buffer, remaining);
 	}
-	remaining = ft_read_line(fd, buffer, remaining);
 	return (remaining);
 }
 

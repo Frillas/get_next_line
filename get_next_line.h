@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:41:11 by aroullea          #+#    #+#             */
-/*   Updated: 2024/11/13 18:53:16 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:11:21 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
-char	*ft_read_line(int fd, char *buffer, char *rem);
-char	*ft_add_buf(int fd, char *remaining);
+char	*ft_big_line(int fd, char *buffer, char *rem);
+char	*ft_size_buf(int fd, char *remaining);
 char	*ft_add_line(char *line);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char const *s2, size_t k, size_t l);
 size_t	ft_strlen(const char *s);
 char	*ft_add_remain(char *remain);
 char	*ft_copy(size_t size, char *new_rem, char *end);
+char	*ft_small_line(int fd, char *rem, int nb);
 
 #endif

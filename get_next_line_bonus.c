@@ -6,7 +6,7 @@
 /*   By: aroullea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:23:55 by aroullea          #+#    #+#             */
-/*   Updated: 2024/11/13 19:03:24 by aroullea         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:10:56 by aroullea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ char	*ft_add_line(char *rem)
 
 	size = 0;
 	i = 0;
-	if (!rem || !*rem)
-		return (NULL);
 	while (rem[size] && rem[size] != '\n')
 		size++;
 	new = (char *) malloc(sizeof(char) * (size + 1 + (rem[size] == '\n')));
@@ -47,7 +45,7 @@ char	*ft_add_remain(char *remain)
 		size = ft_strlen(end + 1);
 	if (end && size)
 	{
-		new_rem = (char *) malloc(sizeof(char) * size + 1);
+		new_rem = (char *) malloc(sizeof(char) * (size + 1));
 		if (new_rem == NULL)
 		{
 			free(remain);
@@ -64,7 +62,7 @@ char	*ft_add_remain(char *remain)
 	return (new_rem);
 }
 
-char	*ft_read_line(int fd, char *buffer, char *rem)
+char	*ft_big_line(int fd, char *buffer, char *rem)
 {
 	char	*end;
 	int		nb_read;
@@ -92,18 +90,23 @@ char	*ft_read_line(int fd, char *buffer, char *rem)
 	return (rem);
 }
 
-char	*ft_add_buf(int fd, char *remaining)
+char	*ft_size_buf(int fd, char *remaining)
 {
 	char	*buffer;
 
-	buffer = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (buffer == NULL)
+	if (BUFFER_SIZE < 1024)
+		remaining = ft_small_line(fd, remaining, 1);
+	else
 	{
-		if (remaining)
-			free(remaining);
-		return (NULL);
+		buffer = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (buffer == NULL)
+		{
+			if (remaining)
+				free(remaining);
+			return (NULL);
+		}
+		remaining = ft_big_line(fd, buffer, remaining);
 	}
-	remaining = ft_read_line(fd, buffer, remaining);
 	return (remaining);
 }
 
@@ -113,10 +116,10 @@ char	*get_next_line(int fd)
 	static char		*remain[1024];
 
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= 1024)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 		return (NULL);
-	remain[fd] = ft_add_buf(fd, remain[fd]);
-	if ((remain[fd] == NULL) || (remain[fd][0] == '\0'))
+	remain[fd] = ft_size_buf(fd, remain[fd]);
+	if (remain[fd] == NULL)
 		return (NULL);
 	line = ft_add_line(remain[fd]);
 	if (line == NULL)
